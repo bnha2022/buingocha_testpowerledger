@@ -1,8 +1,8 @@
-package com.test.powerledger.utils;
+package com.challenge.powerledger.utils;
 
 
-import com.test.powerledger.models.BatteriesDTO;
-import com.test.powerledger.models.Battery;
+import com.challenge.powerledger.models.BatteriesDTO;
+import com.challenge.powerledger.entity.Battery;
 
 public class MapperUtil {
 

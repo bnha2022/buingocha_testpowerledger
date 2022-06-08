@@ -1,4 +1,4 @@
-package com.test.powerledger.controllers;
+package com.challenge.powerledger.controllers;
 
 
 import lombok.NonNull;
@@ -8,32 +8,49 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.test.powerledger.models.BatteriesDTO;
-import com.test.powerledger.models.BatteriesListDTO;
-import com.test.powerledger.services.NameBatteriesService;
+import com.challenge.powerledger.models.BatteriesDTO;
+import com.challenge.powerledger.models.BatteriesListDTO;
+import com.challenge.powerledger.services.BatteriesService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.List;
 
+/**
+ * The type Batteries controller.
+ */
 @RestController
 @Validated
 @RequiredArgsConstructor
 @Log4j2
-public class NamePostcodeController {
+@RequestMapping("/batteries")
+public class BatteriesController {
 
     @NonNull
-    private final NameBatteriesService nameBatteriesService;
+    private final BatteriesService batteriesService;
 
-    @PostMapping(value = "/name")
+    /**
+     * Store list of postcode names response entity.
+     *
+     * @param postcodeDTOs the postcode dt os
+     * @return the response entity
+     */
+    @PostMapping
     public ResponseEntity<Void> storeListOfPostcodeNames(@RequestBody List<@Valid BatteriesDTO> postcodeDTOs) {
         logger.debug("Received request to store postcode ranges: {}", () -> postcodeDTOs);
-        nameBatteriesService.saveListOfNamePostcodeDTOs(postcodeDTOs);
+        batteriesService.saveListOfNamePostcodeDTOs(postcodeDTOs);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/name")
+    /**
+     * Fetch names list by postcode range response entity.
+     *
+     * @param postcodeStart the postcode start
+     * @param postcodeEnd   the postcode end
+     * @return the response entity
+     */
+    @GetMapping
     public ResponseEntity<BatteriesListDTO> fetchNamesListByPostcodeRange(
             @RequestParam(value = "postcodeStart")
             @Min(value = 200, message = "postcode must be between 200 & 9999")
@@ -42,7 +59,7 @@ public class NamePostcodeController {
             @Min(value = 200, message = "postcode must be between 200 & 9999")
             @Max(value = 9999, message = "postcode must be between 200 & 9999") int postcodeEnd) {
         logger.debug("Received request to fetch names by postcodes from {} to {}", () -> postcodeStart, () -> postcodeEnd);
-        var responseBody = nameBatteriesService.fetchBatteriesListDTOByPostcodeRange(postcodeStart, postcodeEnd);
+        var responseBody = batteriesService.fetchBatteriesListDTOByPostcodeRange(postcodeStart, postcodeEnd);
         logger.trace("Response result {} for postcodes from {} to {}", () -> responseBody, () -> postcodeStart, () -> postcodeEnd);
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }

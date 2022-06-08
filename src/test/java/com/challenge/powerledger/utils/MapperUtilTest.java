@@ -1,9 +1,9 @@
-package com.test.powerledger.utils;
+package com.challenge.powerledger.utils;
 
 
 
 import org.junit.jupiter.api.Test;
-import com.test.powerledger.models.BatteriesDTO;
+import com.challenge.powerledger.models.BatteriesDTO;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

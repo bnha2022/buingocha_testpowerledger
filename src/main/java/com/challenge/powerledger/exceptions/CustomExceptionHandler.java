@@ -1,4 +1,4 @@
-package com.test.powerledger.exceptions;
+package com.challenge.powerledger.exceptions;
 
 
 
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import com.test.powerledger.models.ExceptionDTO;
+import com.challenge.powerledger.models.ExceptionDTO;
 
 import javax.validation.ConstraintViolationException;
 import java.sql.SQLException;

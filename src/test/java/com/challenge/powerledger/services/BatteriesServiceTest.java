@@ -1,6 +1,7 @@
-package com.test.powerledger.services;
+package com.challenge.powerledger.services;
 
 
+import com.challenge.powerledger.repositories.BatteriesRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -9,9 +10,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import com.test.powerledger.models.BatteriesDTO;
-import com.test.powerledger.models.Battery;
-import com.test.powerledger.repositories.NameBatteriesRepository;
+import com.challenge.powerledger.models.BatteriesDTO;
+import com.challenge.powerledger.entity.Battery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +19,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(classes = {NameBatteriesService.class})
-public class NameBatteriesServiceTest {
+@SpringBootTest(classes = {BatteriesService.class})
+public class BatteriesServiceTest {
 
     @MockBean
-    private NameBatteriesRepository repository;
+    private BatteriesRepository repository;
 
     @Autowired
-    private NameBatteriesService nameBatteriesService;
+    private BatteriesService batteriesService;
 
     @AfterEach
     public void teardown() {
@@ -38,7 +38,7 @@ public class NameBatteriesServiceTest {
 
     @Test
     public void shouldStoreEmptyList() {
-        nameBatteriesService.saveListOfNamePostcodeDTOs(new ArrayList<>());
+        batteriesService.saveListOfNamePostcodeDTOs(new ArrayList<>());
         verify(repository, times(1)).saveAll(listArgumentCaptor.capture());
 
         var capturedList = listArgumentCaptor.getValue();
@@ -47,7 +47,7 @@ public class NameBatteriesServiceTest {
 
     @Test
     public void shouldStoreListOfNamePostcodeDTOs() {
-        nameBatteriesService.saveListOfNamePostcodeDTOs(List.of(
+        batteriesService.saveListOfNamePostcodeDTOs(List.of(
                 new BatteriesDTO("Aukey", 7899, 100),
                 new BatteriesDTO("Tesla Model X", 2203, 150)));
 
@@ -68,7 +68,7 @@ public class NameBatteriesServiceTest {
                 .when(repository)
                 .findBatteryByPostcodeBetween(eq(2000), eq(4500));
 
-        var responseList = nameBatteriesService.fetchBatteriesListDTOByPostcodeRange(2000, 4500);
+        var responseList = batteriesService.fetchBatteriesListDTOByPostcodeRange(2000, 4500);
 
         verify(repository, times(1)).findBatteryByPostcodeBetween(eq(2000), eq(4500));
         assertThat(responseList.getNames())
@@ -85,7 +85,7 @@ public class NameBatteriesServiceTest {
                 .when(repository)
                 .findBatteryByPostcodeBetween(eq(2000), eq(4500));
 
-        var responseList = nameBatteriesService.fetchBatteriesListDTOByPostcodeRange(2000, 4500);
+        var responseList = batteriesService.fetchBatteriesListDTOByPostcodeRange(2000, 4500);
 
         assertThat(responseList.getAverageWattCapacity()).isEqualTo(100.0);
         assertThat(responseList.getTotalWattCapacity()).isEqualTo(300);

@@ -1,4 +1,4 @@
-package com.test.powerledger.models;
+package com.challenge.powerledger.entity;
 
 import lombok.*;
 
