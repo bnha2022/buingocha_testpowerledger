@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "battery",
-        uniqueConstraints = @UniqueConstraint(name = "uniqueNameAndPostcode", columnNames = {"name", "postcode", "watt_capacity"}
+        uniqueConstraints = @UniqueConstraint(name = "uniqueNameAndPostcode", columnNames = {"name", "postcode", "wattCapacity"}
 ))
 @Getter
 @Setter
@@ -20,7 +20,7 @@ public class Battery {
     private Integer id;
 
     @Column(nullable = false)
-    private String batteryName;
+    private String name;
 
     @Column(nullable = false)
     private Integer postcode;

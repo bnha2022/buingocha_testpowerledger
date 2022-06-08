@@ -8,10 +8,10 @@ You can store names & postcodes into this service by sending a `POST` request to
 
 ```json
 [
-	{ "batteryName": "TestLa Model X", "postcode": 3433, "wattCapacity": 150 },
-	{ "batteryName": "Anker", "postcode": 6045, "wattCapacity": 100 },
-	{ "batteryName": "Energizer", "postcode": 6033, "wattCapacity": 120 },
-	{ "batteryName": "Aukey", "postcode": 6412, "wattCapacity": 50 }
+	{ "name": "Tesla Model X", "postcode": 2000, "wattCapacity": 1500 },
+	{ "name": "Anker", "postcode": 3000, "wattCapacity": 2000 },
+	{ "name": "Aukey", "postcode": 3500, "wattCapacity": 3580 },
+	{ "name": "Energizer", "postcode": 4000, "wattCapacity": 4500 }
 ]
 ```
 
@@ -19,22 +19,27 @@ Batteries names are also to be between 2 and 32 characters long.
 
 ## Fetching Batteries information by Postcode Range
 
-The batteries names, total watt capacity and average watt capacity can be retrieved by `GET` request to the `/batteries` endpoint of the server along with a filtered postcode range placed in the `postcodeStart` and `postcodeEnd` query parameters.
+To test the APIs, I created Swagger UI link below 
 
 ```sh
-$curl -L -X GET 'localhost:8080/?postcodeStart=3433&postcodeEnd=6100'
+    http://localhost:8080/swagger-ui.html
 ```
 
-This should return for the prior dataset
+For example, with API GET data batteries 
+```sh
+    curl -X GET "http://localhost:8080/batteries?postcodeEnd=4500&postcodeStart=2000"
+```
+We will receive response below
 
 ```json
 {
-    "names": [
-        "Anker",
-        "Energizer",
-        "Aukey"
-    ],
-    "totalWattCapacity": 300,
-    "averageWattCapacity": 100
+  "names": [
+    "Anker",
+    "Aukey",
+    "Energizer",
+    "Tesla Model X"
+  ],
+  "totalWattCapacity": 11580,
+  "averageWattCapacity": 2895
 }
 ```

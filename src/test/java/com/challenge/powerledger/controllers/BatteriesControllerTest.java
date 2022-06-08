@@ -58,7 +58,7 @@ public class BatteriesControllerTest {
     public void shouldStoreArrayOfBatteries() throws Exception {
         MockHttpServletRequestBuilder request = post("/batteries")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("[{ \"batteryName\": \"Anker\", \"postcode\": 1000, \"wattCapacity\": 150 }, { \"batteryName\": \"Energizer\", \"postcode\": 9999, \"wattCapacity\": 150 }]");
+                .content("[{ \"name\": \"Anker\", \"postcode\": 1000, \"wattCapacity\": 150 }, { \"name\": \"Energizer\", \"postcode\": 9999, \"wattCapacity\": 150 }]");
 
         this.mockMvc.perform(request)
                 .andDo(print())
@@ -67,7 +67,7 @@ public class BatteriesControllerTest {
         verify(batteriesService, times(1)).saveListOfNamePostcodeDTOs(namePostcodeDTOListCaptor.capture());
         var capturedInput = namePostcodeDTOListCaptor.getValue();
         assertThat(capturedInput).hasSize(2)
-                .extracting(BatteriesDTO::getBatteryName).containsExactly("Anker", "Energizer");
+                .extracting(BatteriesDTO::getName).containsExactly("Anker", "Energizer");
         assertThat(capturedInput)
                 .extracting(BatteriesDTO::getPostcode).containsExactly(1000, 9999);
         assertThat(capturedInput)
@@ -120,7 +120,7 @@ public class BatteriesControllerTest {
     public void shouldErrorWithTooShortName() throws Exception {
         MockHttpServletRequestBuilder request = post("/batteries")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("[{ \"batteryName\": \"c\", \"postcode\": 6000,  \"wattCapacity\": 150 }]");
+                .content("[{ \"name\": \"c\", \"postcode\": 6000,  \"wattCapacity\": 150 }]");
 
         this.mockMvc.perform(request)
                 .andDo(print())
@@ -134,7 +134,7 @@ public class BatteriesControllerTest {
     public void shouldErrorWithTooLongName() throws Exception {
         MockHttpServletRequestBuilder request = post("/batteries")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("[{ \"batteryName\": \"dhfjrnghtidjskwifoentorowlsmcjfod\", \"postcode\": 6000 }]");
+                .content("[{ \"name\": \"dhfjrnghtidjskwifoentorowlsmcjfod\", \"postcode\": 6000 }]");
 
         this.mockMvc.perform(request)
                 .andDo(print())
@@ -212,7 +212,7 @@ public class BatteriesControllerTest {
         this.mockMvc.perform(request)
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("{\"names\":[],\"totalWattCapacity\":0,\"averageWattCapacity\":0.0}")));
+                .andExpect(content().string(containsString("{\"names\":[],\"totalWattCapacity\":0.0,\"averageWattCapacity\":0.0}")));
 
         verify(batteriesService, times(1)).fetchBatteriesListDTOByPostcodeRange(201, 9998);
     }

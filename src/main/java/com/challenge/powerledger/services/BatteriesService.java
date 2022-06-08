@@ -54,11 +54,11 @@ public class BatteriesService {
     public BatteriesListDTO fetchBatteriesListDTOByPostcodeRange(int start, int end) {
         List<Battery> batteries = batteriesRepository.findBatteryByPostcodeBetween(start, end);
         List<String> names = batteries.stream()
-                .sorted(Comparator.comparing(Battery::getBatteryName))
-                .map(Battery::getBatteryName)
+                .sorted(Comparator.comparing(Battery::getName))
+                .map(Battery::getName)
                 .collect(Collectors.toList());
-        int totalWattCapacity = batteries.stream().map(Battery::getWattCapacity).reduce(0,Integer::sum);
-        int averageWattCapacity =  totalWattCapacity / batteries.size();
+        float totalWattCapacity = batteries.stream().map(Battery::getWattCapacity).reduce(0,Integer::sum);
+        float averageWattCapacity =  totalWattCapacity / batteries.size();
         return new BatteriesListDTO(names, totalWattCapacity, averageWattCapacity);
     }
 }

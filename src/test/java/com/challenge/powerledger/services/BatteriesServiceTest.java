@@ -55,7 +55,7 @@ public class BatteriesServiceTest {
 
         var capturedList = listArgumentCaptor.getValue();
         assertThat(capturedList).hasSize(2)
-                .extracting(Battery::getBatteryName).containsExactly("Aukey", "Tesla Model X");
+                .extracting(Battery::getName).containsExactly("Aukey", "Tesla Model X");
         assertThat(capturedList).extracting(Battery::getPostcode).containsExactly(7899, 2203);
     }
 
@@ -81,14 +81,15 @@ public class BatteriesServiceTest {
         doReturn(List.of(
                 new Battery(1, "Anker", 2000, 150),
                 new Battery(2, "Aukey", 2570, 100),
-                new Battery(3, "Energizer", 4000,50)))
+                new Battery(3, "Energizer", 4000,25),
+                new Battery(3, "Energizer", 4000,14)))
                 .when(repository)
                 .findBatteryByPostcodeBetween(eq(2000), eq(4500));
 
         var responseList = batteriesService.fetchBatteriesListDTOByPostcodeRange(2000, 4500);
 
-        assertThat(responseList.getAverageWattCapacity()).isEqualTo(100.0);
-        assertThat(responseList.getTotalWattCapacity()).isEqualTo(300);
+        assertThat(responseList.getAverageWattCapacity()).isEqualTo(72.25);
+        assertThat(responseList.getTotalWattCapacity()).isEqualTo(289);
 
     }
 }

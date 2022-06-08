@@ -14,7 +14,7 @@ public class MapperUtilTest {
         var dto = new BatteriesDTO("Xiaomi", 6158, 150);
         var entity = MapperUtil.toEntity(dto);
 
-        assertThat(entity.getBatteryName()).isEqualTo("Xiaomi");
+        assertThat(entity.getName()).isEqualTo("Xiaomi");
         assertThat(entity.getPostcode()).isEqualTo(6158);
         assertThat(entity.getWattCapacity()).isEqualTo(150);
         assertThat(entity.getId()).isNull();

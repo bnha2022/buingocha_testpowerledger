@@ -8,7 +8,7 @@ public class MapperUtil {
 
     public static Battery toEntity(BatteriesDTO dto) {
         return Battery.builder()
-                .batteryName(dto.getBatteryName())
+                .name(dto.getName())
                 .postcode(dto.getPostcode())
                 .wattCapacity(dto.getWattCapacity())
                 .build();

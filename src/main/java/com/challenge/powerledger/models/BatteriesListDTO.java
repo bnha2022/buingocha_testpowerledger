@@ -8,6 +8,6 @@ import java.util.List;
 public class BatteriesListDTO {
 
     List<String> names;
-    int totalWattCapacity;
+    float totalWattCapacity;
     double averageWattCapacity;
 }
