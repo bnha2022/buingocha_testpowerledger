@@ -58,7 +58,10 @@ public class BatteriesService {
                 .map(Battery::getName)
                 .collect(Collectors.toList());
         float totalWattCapacity = batteries.stream().map(Battery::getWattCapacity).reduce(0,Integer::sum);
-        float averageWattCapacity =  totalWattCapacity / batteries.size();
+        float averageWattCapacity = 0f;
+        if (batteries.size() > 0) {
+            averageWattCapacity =  totalWattCapacity / batteries.size();
+        }
         return new BatteriesListDTO(names, totalWattCapacity, averageWattCapacity);
     }
 }
